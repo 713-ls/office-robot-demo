@@ -1,0 +1,8 @@
+prefix=/home/liangsheng/office_robot_ws/devel
+
+Name: office_robot_sim
+Description: Description of office_robot_sim
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
