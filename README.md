@@ -138,4 +138,5 @@ roslaunch office_robot_task full_demo.launch
 
 - 已完成项目需求整理。
 - 已完成项目开发文档、架构文档和路线图。
-- 下一步是搭建 Ubuntu 20.04 + ROS Noetic 开发环境，并初始化 ROS catkin 工作空间。
+- 已完成 Ubuntu 20.04 + ROS Noetic 环境搭建、TurtleBot3 仿真验证、catkin 工作空间初始化及 Git 仓库推送。
+- 下一步是搭建 Gazebo 办公仿真场景（阶段二）。
