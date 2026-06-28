@@ -1,0 +1,8 @@
+prefix=/home/liangsheng/office_robot_ws/install
+
+Name: office_robot_navigation
+Description: Description of office_robot_navigation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
