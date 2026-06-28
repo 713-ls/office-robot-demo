@@ -64,11 +64,13 @@ CMAKE_BINARY_DIR = /home/liangsheng/office_robot_ws/build
 
 # The main recursive "all" target.
 all: gtest/all
+all: office_robot_navigation/all
 all: office_robot_sim/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
+preinstall: office_robot_navigation/preinstall
 preinstall: office_robot_sim/preinstall
 .PHONY : preinstall
 
@@ -79,6 +81,7 @@ clean: CMakeFiles/run_tests.dir/clean
 clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/doxygen.dir/clean
 clean: gtest/clean
+clean: office_robot_navigation/clean
 clean: office_robot_sim/clean
 .PHONY : clean
 
@@ -131,6 +134,25 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest_main.dir/clean
 .PHONY : gtest/googletest/clean
 
 #=============================================================================
+# Directory level rules for directory office_robot_navigation
+
+# Recursive "all" directory target.
+office_robot_navigation/all:
+.PHONY : office_robot_navigation/all
+
+# Recursive "preinstall" directory target.
+office_robot_navigation/preinstall:
+.PHONY : office_robot_navigation/preinstall
+
+# Recursive "clean" directory target.
+office_robot_navigation/clean: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
+office_robot_navigation/clean: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+office_robot_navigation/clean: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+office_robot_navigation/clean: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
+office_robot_navigation/clean: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/clean
+.PHONY : office_robot_navigation/clean
+
+#=============================================================================
 # Directory level rules for directory office_robot_sim
 
 # Recursive "all" directory target.
@@ -142,11 +164,7 @@ office_robot_sim/preinstall:
 .PHONY : office_robot_sim/preinstall
 
 # Recursive "clean" directory target.
-office_robot_sim/clean: office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
-office_robot_sim/clean: office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
-office_robot_sim/clean: office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
-office_robot_sim/clean: office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
-office_robot_sim/clean: office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/clean
+office_robot_sim/clean:
 .PHONY : office_robot_sim/clean
 
 #=============================================================================
@@ -385,134 +403,134 @@ gtest/googletest/CMakeFiles/gtest_main.dir/clean:
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/clean
 
 #=============================================================================
-# Target rules for target office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir
+# Target rules for target office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir
 
 # All Build rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/all:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/all:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/liangsheng/office_robot_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_cpp"
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_cpp: office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+std_msgs_generate_messages_cpp: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 .PHONY : std_msgs_generate_messages_cpp
 
 # clean rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 
 #=============================================================================
-# Target rules for target office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir
+# Target rules for target office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir
 
 # All Build rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/all:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/depend
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/all:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/depend
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/liangsheng/office_robot_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_eus"
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_eus: office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+std_msgs_generate_messages_eus: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 .PHONY : std_msgs_generate_messages_eus
 
 # clean rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
 
 #=============================================================================
-# Target rules for target office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir
+# Target rules for target office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir
 
 # All Build rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/all:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/depend
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/all:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/liangsheng/office_robot_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_lisp"
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_lisp: office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+std_msgs_generate_messages_lisp: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 .PHONY : std_msgs_generate_messages_lisp
 
 # clean rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 
 #=============================================================================
-# Target rules for target office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir
+# Target rules for target office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir
 
 # All Build rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/depend
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/depend
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/liangsheng/office_robot_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_nodejs"
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_nodejs: office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+std_msgs_generate_messages_nodejs: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
 .PHONY : std_msgs_generate_messages_nodejs
 
 # clean rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
 
 #=============================================================================
-# Target rules for target office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir
+# Target rules for target office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir
 
 # All Build rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/all:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/depend
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/all:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/depend
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/liangsheng/office_robot_ws/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_py"
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/all
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/liangsheng/office_robot_ws/build/CMakeFiles 0
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
-std_msgs_generate_messages_py: office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+std_msgs_generate_messages_py: office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : std_msgs_generate_messages_py
 
 # clean rule for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
-	$(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/clean
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/clean
+office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
+	$(MAKE) $(MAKESILENT) -f office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/clean
+.PHONY : office_robot_navigation/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

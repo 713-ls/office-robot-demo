@@ -171,76 +171,6 @@ depend:
 	cd /home/liangsheng/office_robot_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_nodejs: office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : std_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-.PHONY : office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_py: office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-.PHONY : std_msgs_generate_messages_py
-
-# fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	cd /home/liangsheng/office_robot_ws/build && $(MAKE) $(MAKESILENT) -f office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build.make office_robot_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -254,11 +184,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... std_msgs_generate_messages_lisp"
-	@echo "... std_msgs_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_py"
 .PHONY : help
 
 

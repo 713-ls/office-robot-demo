@@ -1,2 +1,2 @@
-office_robot_sim
+office_robot_navigation:office_robot_sim
 -DCATKIN_DEVEL_PREFIX=/home/liangsheng/office_robot_ws/devel -DCMAKE_INSTALL_PREFIX=/home/liangsheng/office_robot_ws/install -G Unix Makefiles
