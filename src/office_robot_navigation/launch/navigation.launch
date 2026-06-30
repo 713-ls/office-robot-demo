@@ -32,11 +32,33 @@
     <arg name="initial_pose_a" value="0.0"/>
   </include>
   
-  <!-- move_base -->
+  <!-- move_base (load turtlebot3 defaults first, then override with our params) -->
   <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
     <arg name="model" value="$(arg model)" />
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
+  <!-- ====== CUSTOM PARAM OVERRIDES (must come after the include) ====== -->
+  <rosparam ns="/move_base/global_costmap" file="$(find office_robot_navigation)/params/costmap_common_params_waffle_pi.yaml"/>
+  <rosparam ns="/move_base/local_costmap"  file="$(find office_robot_navigation)/params/costmap_common_params_waffle_pi.yaml"/>
+  <!-- 以下三个 YAML 自带顶层 key（local_costmap:/global_costmap:/DWAPlannerROS:），ns 必须用 /move_base -->
+  <rosparam ns="/move_base" file="$(find office_robot_navigation)/params/local_costmap_params.yaml"/>
+  <rosparam ns="/move_base" file="$(find office_robot_navigation)/params/global_costmap_params.yaml"/>
+  <rosparam ns="/move_base" file="$(find office_robot_navigation)/params/move_base_params.yaml"/>
+  <rosparam ns="/move_base" file="$(find office_robot_navigation)/params/dwa_local_planner_params_waffle_pi.yaml"/>
+
+  <!-- ====== 全局规划器 navfn 参数（长距离回家依赖这个） ====== -->
+  <rosparam ns="/move_base/NavfnROS">
+    allow_unknown: true
+    default_tolerance: 0.5
+    use_grid_path: true
+    use_dijkstra: false
+  </rosparam>
+  <rosparam ns="/move_base/GlobalPlanner">
+    allow_unknown: true
+    default_tolerance: 0.5
+    use_grid_path: true
+    use_dijkstra: false
+  </rosparam>
 
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 

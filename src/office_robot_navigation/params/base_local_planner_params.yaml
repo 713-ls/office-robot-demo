@@ -18,6 +18,7 @@ TrajectoryPlannerROS:
 
 # Differential-drive robot configuration
   holonomic_robot: false
+  meter_scoring: true
 
 # Forward Simulation Parameters
   sim_time: 2.0
