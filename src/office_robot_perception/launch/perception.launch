@@ -1,0 +1,11 @@
+<launch>
+  <arg name="image_topic" default="/camera/rgb/image_raw"/>
+  <arg name="process_hz" default="6.0"/>
+  <arg name="show_window" default="true"/>
+
+  <node pkg="office_robot_perception" type="perception_node.py" name="perception_node" output="screen">
+    <param name="image_topic" value="$(arg image_topic)"/>
+    <param name="process_hz" value="$(arg process_hz)"/>
+    <param name="show_window" value="$(arg show_window)"/>
+  </node>
+</launch>

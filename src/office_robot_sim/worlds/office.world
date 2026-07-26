@@ -500,7 +500,7 @@
           <max_contacts>10</max_contacts>
         </collision>
       </link>
-      <pose>0.715772 -1.94877 0 0 -0 0</pose>
+      <pose>-3 -2 0 0 0 3.14</pose>
     </model>
     <model name='table_0'>
       <static>1</static>
@@ -717,7 +717,7 @@
           <max_contacts>10</max_contacts>
         </collision>
       </link>
-      <pose>-2.2639 -1.27936 0 0 -0 0</pose>
+      <pose>-3 2 0 0 0 0</pose>
     </model>
     <model name='table_1'>
       <static>1</static>
@@ -934,7 +934,7 @@
           <max_contacts>10</max_contacts>
         </collision>
       </link>
-      <pose>1.30287 1.32496 0 0 -0 0</pose>
+      <pose>0 2 0 0 0 0</pose>
     </model>
     <model name='table_2'>
       <static>1</static>
@@ -1151,7 +1151,7 @@
           <max_contacts>10</max_contacts>
         </collision>
       </link>
-      <pose>2.58842 -3.377 0 0 -0 0</pose>
+      <pose>3 -2 0 0 0 3.14</pose>
     </model>
     <model name='table_3'>
       <static>1</static>
@@ -1368,7 +1368,7 @@
           <max_contacts>10</max_contacts>
         </collision>
       </link>
-      <pose>3.10533 -0.104384 0 0 -0 0</pose>
+      <pose>3 2 0 0 0 0</pose>
     </model>
     <model name='cinder_block'>
       <link name='link'>
@@ -1530,7 +1530,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-1.24301 -3.20202 0 0 -0 0</pose>
+      <pose>-3 -0.8 0 0 0 0</pose>
     </model>
     <model name='cinder_block_0'>
       <link name='link'>
@@ -1692,7 +1692,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-0.557585 -3.81105 0 0 -0 0</pose>
+      <pose>3 -0.8 0 0 0 0</pose>
     </model>
     <model name='cinder_block_1'>
       <link name='link'>
@@ -1854,7 +1854,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-0.04437 -1.79897 0 0 -0 0</pose>
+      <pose>0 0.8 0 0 0 0</pose>
     </model>
     <model name='cinder_block_2'>
       <link name='link'>
@@ -2016,7 +2016,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-1.29597 -1.49599 0 0 -0 0</pose>
+      <pose>-3 0.8 0 0 0 0</pose>
     </model>
     <model name='cinder_block_3'>
       <link name='link'>
@@ -2178,7 +2178,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.898315 -2.86423 0 0 -0 0</pose>
+      <pose>3 0.8 0 0 0 0</pose>
     </model>
     <model name='Construction Cone'>
       <link name='link'>
@@ -2227,7 +2227,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.401368 -3.09775 0 0 -0 0</pose>
+      <pose>0 0 0 0 0 0</pose>
     </model>
     <model name='Dumpster'>
       <link name='link'>
@@ -2283,9 +2283,9 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.556699 -3.1123 0 0 -0 0</pose>
+      <pose>3 -4 0 0 0 0</pose>
     </model>
-    <state world_name='default'>
+    <!-- state removed
       <sim_time>5869 276000000</sim_time>
       <real_time>293 633795416</real_time>
       <wall_time>1781968255 154140952</wall_time>
@@ -2481,7 +2481,7 @@
       <light name='sun'>
         <pose>0 0 10 0 -0 0</pose>
       </light>
-    </state>
+    state removed -->
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose>-2.74293 -4.14052 1.10599 0 1.2458 1.60665</pose>
@@ -2490,6 +2490,7 @@
       </camera>
     </gui>
     <model name='coke_can'>
+      <static>1</static>
       <link name='link'>
         <inertial>
           <pose>0 0 0.06 0 -0 0</pose>
@@ -2544,9 +2545,10 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.489193 -1.53092 0 0 -0 0</pose>
+      <pose>3 2 1.195 0 0 0</pose>
     </model>
     <model name='wooden_board'>
+      <static>1</static>
       <link name='base'>
         <pose>0 0 0.00523 0 -0 0</pose>
         <inertial>
@@ -2602,6 +2604,18 @@
               <uri>file://media/materials/scripts/gazebo.material</uri>
               <name>Gazebo/Wood</name>
             </script>
+          </material>
+        </visual>
+        <visual name='board_target_mark'>
+          <pose>0 0 0.007 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.065 0.16 0.003</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
           </material>
         </visual>
         <visual name='tee_nut_1'>
@@ -2668,10 +2682,11 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-0.731954 -2.3215 0 0 -0 0</pose>
+      <pose>0 2 1.18 1.5708 0 0</pose>
     </model>
     <model name='cardboard_box'>
-      <pose>-1.13323 -1.19284 0.15 0 -0 0</pose>
+      <static>1</static>
+      <pose>-3 2 1.165 0 0 0</pose>
       <link name='link'>
         <inertial>
           <mass>2</mass>
@@ -2721,6 +2736,18 @@
               <scale>1.25932 1.00745 0.755591</scale>
             </mesh>
           </geometry>
+        </visual>
+        <visual name='box_target_mark'>
+          <pose>0 -0.205 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.32 0.003 0.06</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
