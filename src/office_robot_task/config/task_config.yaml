@@ -10,7 +10,8 @@ patrol_points:
   - [3.0, 3.0, -1.5708]
 pick_duration: 2.0
 place_duration: 2.0
-patrol_wait: 4.0
+patrol_wait: 6.0
 nav_timeout: 150.0
 auto_start_delay: 3.0
 detect_confirm_frames: 3
+detect_window: 8.0

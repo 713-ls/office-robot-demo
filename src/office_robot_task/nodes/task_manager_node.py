@@ -50,6 +50,7 @@ class TaskManager:
         self.detect_confirm_frames = int(
             rospy.get_param("~detect_confirm_frames", 3)
         )
+        self.detect_window = float(rospy.get_param("~detect_window", 8.0))
 
         self.cmd_pub = rospy.Publisher("/task_command", String, queue_size=5)
         self.state_pub = rospy.Publisher(
@@ -65,8 +66,7 @@ class TaskManager:
         self._busy = False
         self._patrol_active = False
         self._task_active = False
-        self._confirm_streak = {}
-        self._confirm_last = {}
+        self._confirm_times = {}
         self._detect_event = threading.Event()
         self._confirmed_label = None
 
@@ -99,7 +99,8 @@ class TaskManager:
         """接收 /detected_objects（每行 label,conf,cx,cy,w,h）。
 
         只在巡逻阶段接收；任务进行中屏蔽，防止重复触发。
-        同一 label 连续 detect_confirm_frames 帧（帧间隔 < 1.5s）才确认。
+        同一 label 在 detect_window 秒内累计 detect_confirm_frames 帧才确认，
+        不要求连续帧，避免感知在虚拟机里掉帧时永远无法触发。
         """
         if not self._patrol_active or self._task_active:
             return
@@ -118,20 +119,30 @@ class TaskManager:
             if label in self.pickup_points:
                 seen[label] = max(seen.get(label, 0.0), confidence)
 
-        # 超过 1.5s 未再出现的候选清零，防止旧帧隔很久后凑数
-        for label in list(self._confirm_streak.keys()):
-            if label not in seen and now - self._confirm_last.get(label, 0.0) > 1.5:
-                del self._confirm_streak[label]
+        if seen:
+            rospy.loginfo_throttle(
+                1.0,
+                "detection candidates: %s",
+                {label: round(conf, 2) for label, conf in sorted(seen.items())},
+            )
+
+        # 窗口内没再出现的候选清理掉，防止旧帧隔很久后凑数
+        for label in list(self._confirm_times.keys()):
+            if label not in seen and self._confirm_times[label] \
+                    and now - self._confirm_times[label][-1] > self.detect_window:
+                del self._confirm_times[label]
 
         for label in seen:
-            if now - self._confirm_last.get(label, 0.0) < 1.5:
-                self._confirm_streak[label] = self._confirm_streak.get(label, 0) + 1
-            else:
-                self._confirm_streak[label] = 1
-            self._confirm_last[label] = now
+            times = self._confirm_times.setdefault(label, [])
+            times.append(now)
+            while times and now - times[0] > self.detect_window:
+                times.pop(0)
 
-            if self._confirm_streak[label] >= self.detect_confirm_frames:
-                rospy.loginfo("target confirmed: %s", label)
+            if len(times) >= self.detect_confirm_frames:
+                rospy.loginfo(
+                    "target confirmed: %s (%d frames in last %.1fs)",
+                    label, len(times), self.detect_window,
+                )
                 self._confirmed_label = label
                 self._detect_event.set()
                 return
@@ -163,6 +174,10 @@ class TaskManager:
                         "patrol navigation failed at point %d" % (index + 1)
                     )
                     return
+                rospy.loginfo(
+                    "patrol point %d reached, waiting %.1fs for detection...",
+                    index + 1, self.patrol_wait,
+                )
                 label = self._wait_for_detection(self.patrol_wait)
                 if label is not None:
                     self._run_task(label)
@@ -173,7 +188,11 @@ class TaskManager:
             self._busy = False
 
     def _wait_for_detection(self, timeout):
-        self._detect_event.clear()
+        # 如果接近目标点的过程中已经确认过目标，直接生效
+        if self._detect_event.is_set():
+            label = self._confirmed_label
+            self._detect_event.clear()
+            return label
         self._confirmed_label = None
         if self._detect_event.wait(timeout):
             return self._confirmed_label
