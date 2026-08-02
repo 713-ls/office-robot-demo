@@ -1,0 +1,12 @@
+<launch>
+  <arg name="open_rviz" default="true"/>
+
+  <node pkg="office_robot_visualization" type="visualization_node.py"
+        name="visualization_node" output="screen">
+    <rosparam file="$(find office_robot_task)/config/task_config.yaml" command="load"/>
+  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+        args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"
+        if="$(arg open_rviz)"/>
+</launch>

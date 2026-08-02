@@ -66,6 +66,8 @@ flowchart LR
 - `/detected_objects`
 - `/task_command`
 - `/task_state`
+- `/navigation_state`
+- `/visualization_marker_array`
 - `/move_base/goal`
 - `/move_base/result`
 
@@ -94,21 +96,22 @@ flowchart LR
 
 ## 运行方式
 
-当前阶段尚未生成 ROS 代码。后续完整 demo 预计使用以下命令启动：
+一键启动完整 demo（Gazebo 场景 + 导航 + 感知 + 任务状态机 + RViz 标记）：
 
 ```bash
-roslaunch office_robot_sim office_world.launch
+roslaunch office_robot_task task_demo.launch
+roslaunch office_robot_task full_demo.launch
+```
+
+分模块调试时使用：
+
+```bash
 roslaunch office_robot_navigation navigation.launch
 roslaunch office_robot_perception perception.launch
-roslaunch office_robot_task task_demo.launch
 roslaunch office_robot_visualization visualization.launch
 ```
 
-最终会提供一键启动入口：
-
-```bash
-roslaunch office_robot_task full_demo.launch
-```
+任务流程：机器人从起点出发沿办公桌巡逻，感知确认目标后自动执行"取货 -> 配送 -> 回起点"，任务状态通过 `/task_state` 发布，RViz 中显示取货点、配送点和状态标记。
 
 ## 开发路线
 
@@ -140,4 +143,6 @@ roslaunch office_robot_task full_demo.launch
 - 已完成项目开发文档、架构文档和路线图。
 - 已完成 Ubuntu 20.04 + ROS Noetic 环境搭建、TurtleBot3 仿真验证、catkin 工作空间初始化及 Git 仓库推送。
 - 已完成 Gazebo 办公场景搭建：10m×10m 墙体、5 张办公桌、通道障碍物、配送区标记，以及瓶子/文件夹/箱子三类目标物体，TurtleBot3 Waffle Pi 已部署至出生点，LIDAR 和相机就绪。
-- 下一步是实现 ROS Navigation Stack 自主导航（阶段三）。
+- 已完成阶段三自主导航：地图、AMCL、move_base、多目标点导航、两段式返回起点；`navigation_manager_node` 已升级为订阅 `/task_command`、发布 `/navigation_state` 的常驻服务。
+- 已完成阶段四语义感知：OpenCV 识别 `coke_can` / `wooden_board` / `cardboard_box`，发布 `/detected_objects` 和 `/perception/debug_image`。
+- 阶段五任务执行与简化抓取代码已完成：`task_manager_node` 状态机（巡逻触发、拾取/配送模拟、失败回起点）、`visualization_node` RViz 标记、`task_demo` / `full_demo` 一键入口；待 Ubuntu 仿真环境验证。
