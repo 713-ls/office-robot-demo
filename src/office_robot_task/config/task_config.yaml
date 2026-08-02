@@ -1,0 +1,16 @@
+home:            [-3.0, -4.0, 0.0]
+delivery_point:  [-1.5, -3.0, 0.0]
+pickup_points:
+  cardboard_box: [-3.0, 3.0, -1.5708]
+  wooden_board:  [0.0, 3.0, -1.5708]
+  coke_can:      [3.0, 3.0, -1.5708]
+patrol_points:
+  - [-3.0, 3.0, -1.5708]
+  - [0.0, 3.0, -1.5708]
+  - [3.0, 3.0, -1.5708]
+pick_duration: 2.0
+place_duration: 2.0
+patrol_wait: 4.0
+nav_timeout: 150.0
+auto_start_delay: 3.0
+detect_confirm_frames: 3

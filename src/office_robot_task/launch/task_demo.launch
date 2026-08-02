@@ -1,0 +1,28 @@
+<launch>
+  <arg name="open_rviz" default="true"/>
+  <arg name="show_window" default="false"/>
+
+  <!-- 导航栈（地图 + AMCL + move_base，不重复开 RViz） -->
+  <include file="$(find office_robot_navigation)/launch/navigation.launch">
+    <arg name="open_rviz" value="false"/>
+  </include>
+
+  <!-- 感知（录屏时默认关闭 OpenCV 调试窗口） -->
+  <include file="$(find office_robot_perception)/launch/perception.launch">
+    <arg name="show_window" value="$(arg show_window)"/>
+  </include>
+
+  <!-- 导航执行器：接收 /task_command，发布 /navigation_state -->
+  <node pkg="office_robot_navigation" type="navigation_manager_node.py"
+        name="navigation_manager_node" output="screen"/>
+
+  <!-- 任务状态机：巡逻 -> 感知触发 -> 取货 -> 配送 -> 回家 -->
+  <node pkg="office_robot_task" type="task_manager_node.py"
+        name="task_manager_node" output="screen">
+    <rosparam file="$(find office_robot_task)/config/task_config.yaml" command="load"/>
+  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+        args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"
+        if="$(arg open_rviz)"/>
+</launch>

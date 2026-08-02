@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 import math
+import queue
+import threading
 import rospy
 import tf
 import actionlib
 
 from actionlib_msgs.msg import GoalStatus
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from std_msgs.msg import String
 from std_srvs.srv import Empty
 
 
@@ -178,56 +181,183 @@ def send_goal(client, tf_listener, gx, gy, yaw=0.0,
     return False
 
 
-def main():
-    rospy.init_node("navigation_manager_node")
+class NavigationManager:
+    """常驻导航服务：订阅 /task_command，发布 /navigation_state。
 
-    client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-    client.wait_for_server()
+    原有 send_goal / clear_costmaps / 两段式回家逻辑全部保留，
+    这里只负责把命令排队、串行执行，并对外报告状态。
+    """
 
-    tf_listener = tf.TransformListener()
-    rospy.sleep(1.0)
+    def __init__(self):
+        self.client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        self.client.wait_for_server()
 
-    goals = [
-        (-3.0, 3.0, 0.0),
-        (0.0, 3.0, 0.0),
-        (3.0, 3.0, 0.0),
-    ]
+        self.tf_listener = tf.TransformListener()
+        rospy.sleep(1.0)
 
-    home = (-3.0, -4.0, 0.0)
+        self.demo_mode = bool(rospy.get_param("~demo_mode", False))
+        self.home = tuple(rospy.get_param("~home", [-3.0, -4.0, 0.0]))
+        self.demo_goals = [
+            tuple(g) for g in rospy.get_param(
+                "~demo_goals",
+                [[-3.0, 3.0, 0.0], [0.0, 3.0, 0.0], [3.0, 3.0, 0.0]],
+            )
+        ]
 
-    failed = []
+        # 所有目标点都在单个 worker 线程里串行执行，避免
+        # SimpleActionClient 被并发 send_goal 破坏内部状态机。
+        self._cmd_queue = queue.Queue()
+        self._cancelled = False
 
-    try:
-        for g in goals:
-            ok = send_goal(client, tf_listener, *g)
-            if not ok:
-                failed.append(g)
+        self.state_pub = rospy.Publisher(
+            "/navigation_state", String, queue_size=5, latch=True
+        )
+        rospy.Subscriber("/task_command", String, self.on_command, queue_size=5)
 
-    finally:
+        self.set_state("IDLE")
+
+        self._worker_thread = threading.Thread(target=self._worker, daemon=True)
+        self._worker_thread.start()
+
+    # ---------- 对外接口 ----------
+
+    def set_state(self, state):
+        self.state_pub.publish(state)
+        rospy.loginfo("navigation_state -> %s", state)
+
+    def on_command(self, msg):
+        cmd = msg.data.strip()
+        if not cmd:
+            return
+
+        if cmd == "cancel":
+            self._cancelled = True
+            try:
+                self.client.cancel_all_goals()
+            except Exception:
+                pass
+            while True:
+                try:
+                    self._cmd_queue.get_nowait()
+                except queue.Empty:
+                    break
+            self._cmd_queue.put(None)  # 让 worker 清掉取消标记并回到 IDLE
+
+        elif cmd == "return_home":
+            self._cmd_queue.put(("home", None, None, None))
+
+        elif cmd.startswith("goto:"):
+            try:
+                values = [float(v) for v in cmd.split(":", 1)[1].split(",")]
+                if len(values) != 3:
+                    raise ValueError
+            except ValueError:
+                rospy.logerr("bad goto command: %s", cmd)
+                self.set_state("FAILED")
+                return
+            self._cmd_queue.put(("goto", values[0], values[1], values[2]))
+
+        else:
+            rospy.logwarn("unknown command: %s", cmd)
+
+    # ---------- 内部执行 ----------
+
+    def _worker(self):
+        if self.demo_mode:
+            self._run_demo_sequence()
+
+        while not rospy.is_shutdown():
+            try:
+                item = self._cmd_queue.get(timeout=0.5)
+            except queue.Empty:
+                continue
+
+            if item is None:  # cancel 信号
+                self._cancelled = False
+                self.set_state("IDLE")
+                continue
+
+            kind, x, y, yaw = item
+            if kind == "goto":
+                self._run_goto(x, y, yaw)
+            elif kind == "home":
+                self._run_home()
+
+    def _finish(self, ok):
+        if self._cancelled:
+            self._cancelled = False
+            self.set_state("IDLE")
+        else:
+            self.set_state("SUCCEEDED" if ok else "FAILED")
+
+    def _run_goto(self, x, y, yaw):
+        self.set_state("NAVIGATING")
+        ok = False
+        if not self._cancelled:
+            ok = send_goal(
+                self.client, self.tf_listener, x, y, yaw,
+                retries=1, timeout=90.0,
+            )
+        self._finish(ok)
+
+    def _run_home(self):
+        self.set_state("NAVIGATING")
+        ok = self._go_home_locked()
+        self._finish(ok)
+
+    def _go_home_locked(self):
         # === 两段式回家：先沿已知通道回 (-3,3)，再直下到家 ===
-        # 这样可以避免在 (3,3) 死胡同里硬转弯
+        # 这样可以避免在 (3,3) 死胡同里硬转弯（阶段三调出来的逻辑，保留）
         rospy.loginfo("return phase 1/2: follow corridor back to (-3.0, 3.0)")
         clear_costmaps()
         rospy.sleep(1.0)
-        ok = send_goal(client, tf_listener, -3.0, 3.0, 0.0, retries=2, timeout=90.0)
+        ok = send_goal(
+            self.client, self.tf_listener, -3.0, 3.0, 0.0,
+            retries=2, timeout=90.0,
+        )
         if not ok:
             rospy.logwarn("waypoint (-3,3) failed, will try direct home anyway")
 
-        rospy.loginfo("return phase 2/2: go home (-3.0, -4.0)")
+        rospy.loginfo("return phase 2/2: go home (%.2f, %.2f)", self.home[0], self.home[1])
         clear_costmaps()
         rospy.sleep(1.0)
         try:
-            client.cancel_all_goals()
-        except:
+            self.client.cancel_all_goals()
+        except Exception:
             pass
         rospy.sleep(0.5)
-        ok = send_goal(client, tf_listener, *home, retries=3, timeout=180.0)
+        ok = send_goal(
+            self.client, self.tf_listener,
+            self.home[0], self.home[1], self.home[2],
+            retries=3, timeout=180.0,
+        )
         if ok:
             rospy.loginfo("HOME reached!")
         else:
             rospy.logerr("HOME failed!")
+        return ok
 
-    rospy.loginfo("done. failed goals: %s", failed)
+    def _run_demo_sequence(self):
+        """demo_mode：保留阶段三的固定三点巡逻 + 回家，作为回归测试入口。"""
+        failed = []
+        try:
+            for g in self.demo_goals:
+                if self._cancelled:
+                    break
+                self.set_state("NAVIGATING")
+                ok = send_goal(self.client, self.tf_listener, *g)
+                if not ok:
+                    failed.append(g)
+                self._finish(ok)
+        finally:
+            self._run_home()
+        rospy.loginfo("demo done. failed goals: %s", failed)
+
+
+def main():
+    rospy.init_node("navigation_manager_node")
+    NavigationManager()
+    rospy.spin()
 
 
 if __name__ == "__main__":
