@@ -18,6 +18,20 @@ class TaskManager:
         self.delivery_point = tuple(
             rospy.get_param("~delivery_point", [-1.5, -3.0, 0.0])
         )
+        self.delivery_route = [
+            tuple(point)
+            for point in rospy.get_param(
+                "~delivery_route",
+                [[-1.5, 3.0, -1.5708], [-1.5, -3.0, 0.0]],
+            )
+        ]
+        self.return_route = [
+            tuple(point)
+            for point in rospy.get_param(
+                "~return_route",
+                [[-1.5, -4.0, 0.0], [-3.0, -4.0, 0.0]],
+            )
+        ]
         self.pickup_points = {
             label: tuple(point)
             for label, point in rospy.get_param(
@@ -216,7 +230,7 @@ class TaskManager:
             rospy.sleep(self.pick_duration)
 
             self.set_state("NAVIGATING_TO_DELIVERY", label)
-            if not self._execute_nav(self.delivery_point):
+            if not self._execute_route(self.delivery_route, "delivery"):
                 self._fail_and_home("navigation to delivery failed")
                 return
 
@@ -224,7 +238,7 @@ class TaskManager:
             rospy.sleep(self.place_duration)
 
             self.set_state("RETURNING_HOME", label)
-            if not self._execute_home():
+            if not self._execute_route(self.return_route, "return"):
                 self._fail_and_home("return home failed")
                 return
 
@@ -243,6 +257,16 @@ class TaskManager:
         self.set_state("IDLE", "returned home after failure")
 
     # ---------- 导航命令 ----------
+
+    def _execute_route(self, route, stage):
+        for index, point in enumerate(route):
+            rospy.loginfo(
+                "%s waypoint %d/%d -> (%.2f, %.2f)",
+                stage, index + 1, len(route), point[0], point[1],
+            )
+            if not self._execute_nav(point):
+                return False
+        return True
 
     def _execute_nav(self, pose):
         self._nav_event.clear()
