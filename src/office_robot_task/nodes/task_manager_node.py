@@ -16,20 +16,20 @@ class TaskManager:
     def __init__(self):
         self.home = tuple(rospy.get_param("~home", [-3.0, -4.0, 0.0]))
         self.delivery_point = tuple(
-            rospy.get_param("~delivery_point", [-1.5, -3.0, 0.0])
+            rospy.get_param("~delivery_point", [1.0, -3.5, 0.0])
         )
         self.delivery_route = [
             tuple(point)
             for point in rospy.get_param(
                 "~delivery_route",
-                [[-1.5, 3.0, -1.5708], [-1.5, -3.0, 0.0]],
+                [[1.5, 3.0, -1.5708], [1.5, -3.0, 0.0], [1.0, -3.5, 0.0]],
             )
         ]
         self.return_route = [
             tuple(point)
             for point in rospy.get_param(
                 "~return_route",
-                [[-1.5, -4.0, 0.0], [-3.0, -4.0, 0.0]],
+                [[1.0, -4.0, 0.0], [-3.0, -4.0, 0.0]],
             )
         ]
         self.pickup_points = {
