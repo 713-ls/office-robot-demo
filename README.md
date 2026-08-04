@@ -135,7 +135,7 @@ roslaunch office_robot_visualization visualization.launch
 - Gazebo 办公场景截图：待补充。
 - RViz 导航截图：待补充。
 - 目标检测截图：待补充。
-- 完整任务 demo 视频：待补充。
+- 完整任务 demo 视频：已录制（292MB，未提交进仓库），阶段六整理后以网盘或 Releases 外链形式补充。
 
 ## 当前状态
 
@@ -145,4 +145,4 @@ roslaunch office_robot_visualization visualization.launch
 - 已完成 Gazebo 办公场景搭建：10m×10m 墙体、5 张办公桌、通道障碍物、配送区标记，以及瓶子/文件夹/箱子三类目标物体，TurtleBot3 Waffle Pi 已部署至出生点，LIDAR 和相机就绪。
 - 已完成阶段三自主导航：地图、AMCL、move_base、多目标点导航、两段式返回起点；`navigation_manager_node` 已升级为订阅 `/task_command`、发布 `/navigation_state` 的常驻服务。
 - 已完成阶段四语义感知：OpenCV 识别 `coke_can` / `wooden_board` / `cardboard_box`，发布 `/detected_objects` 和 `/perception/debug_image`。
-- 阶段五任务执行与简化抓取代码已完成：`task_manager_node` 状态机（巡逻触发、拾取/配送模拟、失败回起点）、`visualization_node` RViz 标记、`task_demo` / `full_demo` 一键入口；待 Ubuntu 仿真环境验证。
+- 阶段五任务执行与简化抓取已验证完成：`task_manager_node` 状态机完整流转（`IDLE → DETECTED → NAVIGATING_TO_OBJECT → PICKING → NAVIGATING_TO_DELIVERY → PLACING → RETURNING_HOME → DONE`），感知自动触发任务、送达垃圾箱附近并返回起点均正常；`visualization_node` RViz 标记和 `task_demo` / `full_demo` 一键入口可用。
